@@ -16,7 +16,7 @@ services:
         fromService:
           type: web
           name: chat-frontend
-          property: url
+          property: host
 
   - type: web
     name: chat-frontend
