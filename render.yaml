@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: chat-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_URL
+        fromService:
+          type: web
+          name: chat-frontend
+          property: url
+
+  - type: web
+    name: chat-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview -- --host --port $PORT
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: chat-backend
+          property: url

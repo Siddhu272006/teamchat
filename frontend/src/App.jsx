@@ -20,7 +20,7 @@ function App() {
 
   const fetchConversations = async (token) => {
     try {
-      const res = await axios.get('http://localhost:5000/api/chat/conversations', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/chat/conversations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setConversations(res.data);
