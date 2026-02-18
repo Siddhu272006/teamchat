@@ -29,7 +29,12 @@ export default function Login({ onLogin }) {
                 <h2 className="text-2xl font-bold text-center text-gray-900">
                     {isLogin ? 'Sign in to your account' : 'Create a new account'}
                 </h2>
-                {error && <div className="p-3 text-red-500 bg-red-100 rounded">{error}</div>}
+                {error && (
+                    <div className="p-3 text-red-500 bg-red-100 rounded">
+                        <p>{error}</p>
+                        <p className="text-xs text-gray-500 mt-1">Target: {import.meta.env.VITE_API_URL ? (import.meta.env.VITE_API_URL.startsWith('http') ? import.meta.env.VITE_API_URL : `https://${import.meta.env.VITE_API_URL}`) : 'undefined'}</p>
+                    </div>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {!isLogin && (
                         <div className="relative">
