@@ -12,7 +12,9 @@ export default function Login({ onLogin }) {
         setError('');
         const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
         try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/${isLogin ? 'login' : 'register'}`, formData);
+            const apiUrl = import.meta.env.VITE_API_URL;
+            const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+            const { data } = await axios.post(`${formattedUrl}/api/auth/${isLogin ? 'login' : 'register'}`, formData);
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
             onLogin(data.user);

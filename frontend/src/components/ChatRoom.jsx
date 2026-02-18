@@ -3,7 +3,9 @@ import io from 'socket.io-client';
 import axios from 'axios';
 import { Send, Paperclip, FileText, Image as ImageIcon } from 'lucide-react';
 
-const socket = io(import.meta.env.VITE_API_URL);
+const apiUrl = import.meta.env.VITE_API_URL;
+const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+const socket = io(formattedUrl);
 
 export default function ChatRoom({ conversation, currentUser }) {
     const [messages, setMessages] = useState([]);
@@ -58,7 +60,9 @@ export default function ChatRoom({ conversation, currentUser }) {
         }
 
         try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/chat/message/${conversation._id}`, {
+            const apiUrl = import.meta.env.VITE_API_URL;
+            const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+            const res = await axios.post(`${formattedUrl}/api/chat/message/${conversation._id}`, {
                 content: input,
                 fileUrl
             }, {

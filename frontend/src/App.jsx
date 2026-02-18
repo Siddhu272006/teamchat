@@ -20,11 +20,13 @@ function App() {
 
   const fetchConversations = async (token) => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/chat/conversations`, {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+      const response = await axios.get(`${formattedUrl}/api/chat/conversations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setConversations(res.data);
-      if (res.data.length > 0 && !activeConversation) {
+      setConversations(response.data);
+      if (response.data.length > 0 && !activeConversation) {
         // Only auto-select if nothing selected
         // setActiveConversation(res.data[0]); 
         // Actually, maybe don't auto-select for better UX
@@ -53,7 +55,9 @@ function App() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/chat/conversations', { participantUsername: username }, {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+      const res = await axios.post(`${formattedUrl}/api/chat/conversations`, { participantUsername: username }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
 
@@ -108,7 +112,7 @@ function App() {
               <div
                 key={conv._id}
                 onClick={() => setActiveConversation(conv)}
-                className={`p-3 mx-2 rounded-lg cursor-pointer flex items-center gap-3 transition-colors ${activeConversation?._id === conv._id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
+                className={`p - 3 mx - 2 rounded - lg cursor - pointer flex items - center gap - 3 transition - colors ${activeConversation?._id === conv._id ? 'bg-blue-50 text-blue-700' : 'hover:bg-gray-50'
                   }`}
               >
                 <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
