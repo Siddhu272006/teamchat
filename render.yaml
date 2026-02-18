@@ -3,8 +3,8 @@ services:
     name: chat-backend
     env: node
     plan: free
-    buildCommand: npm install && npm run build:backend
-    startCommand: npm run start:backend
+    buildCommand: bash build-backend.sh
+    startCommand: bash start-backend.sh
     envVars:
       - key: PORT
         value: 5000
@@ -22,8 +22,8 @@ services:
     name: chat-frontend
     env: node
     plan: free
-    buildCommand: npm install && npm run build:frontend
-    startCommand: npm run start:frontend
+    buildCommand: bash build-frontend.sh
+    startCommand: bash start-frontend.sh
     envVars:
       - key: VITE_API_URL
         fromService:
