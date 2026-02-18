@@ -2,6 +2,7 @@ services:
   - type: web
     name: chat-backend
     env: node
+    plan: free
     buildCommand: npm install
     startCommand: node server.js
     envVars:
@@ -20,6 +21,7 @@ services:
   - type: web
     name: chat-frontend
     env: node
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: npm run preview -- --host --port $PORT
     envVars:
