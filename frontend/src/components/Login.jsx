@@ -19,7 +19,7 @@ export default function Login({ onLogin }) {
             localStorage.setItem('user', JSON.stringify(data.user));
             onLogin(data.user);
         } catch (err) {
-            setError(err.response?.data?.error || 'An error occurred');
+            setError(err.response?.data?.error || err.message || 'An error occurred');
         }
     };
 
