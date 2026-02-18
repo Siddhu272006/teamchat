@@ -2,6 +2,7 @@ services:
   - type: web
     name: chat-backend
     env: node
+    rootDir: backend
     plan: free
     buildCommand: npm install
     startCommand: node server.js
@@ -21,6 +22,7 @@ services:
   - type: web
     name: chat-frontend
     env: node
+    rootDir: frontend
     plan: free
     buildCommand: npm install && npm run build
     startCommand: npx serve -s dist -l $PORT
