@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { getApiUrl } from '../utils/api';
 import { Send, Paperclip, FileText, Image as ImageIcon } from 'lucide-react';
 
-const apiUrl = import.meta.env.VITE_API_URL;
-const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+const formattedUrl = getApiUrl();
 const socket = io(formattedUrl);
 
 export default function ChatRoom({ conversation, currentUser }) {
@@ -60,8 +60,7 @@ export default function ChatRoom({ conversation, currentUser }) {
         }
 
         try {
-            const apiUrl = import.meta.env.VITE_API_URL;
-            const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+            const formattedUrl = getApiUrl();
             const res = await axios.post(`${formattedUrl}/api/chat/message/${conversation._id}`, {
                 content: input,
                 fileUrl

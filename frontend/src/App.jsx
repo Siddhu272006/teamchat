@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getApiUrl } from './utils/api';
 import Login from './components/Login';
 import ChatRoom from './components/ChatRoom';
 import { MessageSquare, LogOut, Users, PlusCircle } from 'lucide-react';
@@ -20,8 +21,7 @@ function App() {
 
   const fetchConversations = async (token) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+      const formattedUrl = getApiUrl();
       const response = await axios.get(`${formattedUrl}/api/chat/conversations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -55,8 +55,7 @@ function App() {
     }
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+      const formattedUrl = getApiUrl();
       const res = await axios.post(`${formattedUrl}/api/chat/conversations`, { participantUsername: username }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });

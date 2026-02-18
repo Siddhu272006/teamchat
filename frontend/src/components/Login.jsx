@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { getApiUrl } from '../utils/api';
 import { User, Lock, Mail } from 'lucide-react';
 
 export default function Login({ onLogin }) {
@@ -12,8 +13,7 @@ export default function Login({ onLogin }) {
         setError('');
         const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
         try {
-            const apiUrl = import.meta.env.VITE_API_URL;
-            const formattedUrl = apiUrl.startsWith('http') ? apiUrl : `https://${apiUrl}`;
+            const formattedUrl = getApiUrl();
             const { data } = await axios.post(`${formattedUrl}/api/auth/${isLogin ? 'login' : 'register'}`, formData);
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
@@ -32,7 +32,7 @@ export default function Login({ onLogin }) {
                 {error && (
                     <div className="p-3 text-red-500 bg-red-100 rounded">
                         <p>{error}</p>
-                        <p className="text-xs text-gray-500 mt-1">Target: {import.meta.env.VITE_API_URL ? (import.meta.env.VITE_API_URL.startsWith('http') ? import.meta.env.VITE_API_URL : `https://${import.meta.env.VITE_API_URL}`) : 'undefined'}</p>
+                        <p className="text-xs text-gray-500 mt-1">Target: {getApiUrl()}</p>
                     </div>
                 )}
                 <form onSubmit={handleSubmit} className="space-y-4">
