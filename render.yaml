@@ -14,19 +14,23 @@ services:
         sync: false
       - key: CLIENT_URL
         fromService:
-          type: web
+          type: static
           name: chat-frontend
-          property: host
+          property: url
 
-  - type: web
+  - type: static
     name: chat-frontend
     env: node
     plan: free
     buildCommand: npm install && npm run build
-    startCommand: npm run preview -- --host --port $PORT
+    publish: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       - key: VITE_API_URL
         fromService:
           type: web
           name: chat-backend
-          property: host
+          property: url
