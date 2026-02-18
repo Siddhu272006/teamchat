@@ -45,6 +45,16 @@ app.use('/api/auth', authRoutes.router);
 app.use('/api/chat', chatRoutes);
 app.use('/api/files', fileRoutes);
 
+app.get('/api/health', (req, res) => {
+    const state = mongoose.connection.readyState;
+    const stateNames = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+    res.json({
+        status: state === 1 ? 'ok' : 'error',
+        dbState: stateNames[state] || 'unknown',
+        activeConnection: !!mongoose.connection.db
+    });
+});
+
 // Socket.io - Real-time Chat
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
@@ -63,7 +73,13 @@ io.on('connection', (socket) => {
     });
 });
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connection.on('connected', () => console.log('Mongoose: Connected'));
+mongoose.connection.on('error', (err) => console.error('Mongoose: Connection error:', err));
+mongoose.connection.on('disconnected', () => console.log('Mongoose: Disconnected'));
+
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000
+})
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
