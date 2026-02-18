@@ -18,12 +18,11 @@ services:
           name: chat-frontend
           property: url
 
-  - type: static
-    name: chat-frontend
-    env: node
-    plan: free
+staticSites:
+  - name: chat-frontend
     buildCommand: npm install && npm run build
     publish: dist
+    plan: free
     routes:
       - type: rewrite
         source: /*
