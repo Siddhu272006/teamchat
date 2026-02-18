@@ -14,19 +14,16 @@ services:
         sync: false
       - key: CLIENT_URL
         fromService:
-          type: static
+          type: web
           name: chat-frontend
           property: url
 
-static_sites:
-  - name: chat-frontend
-    buildCommand: npm install && npm run build
-    publish: dist
+  - type: web
+    name: chat-frontend
+    env: node
     plan: free
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+    buildCommand: npm install && npm run build
+    startCommand: npx serve -s dist -l $PORT
     envVars:
       - key: VITE_API_URL
         fromService:
