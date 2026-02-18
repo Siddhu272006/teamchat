@@ -3,8 +3,8 @@ services:
     name: chat-backend
     env: node
     plan: free
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && node server.js
+    buildCommand: npm install && npm run build:backend
+    startCommand: npm run start:backend
     envVars:
       - key: PORT
         value: 5000
@@ -22,8 +22,8 @@ services:
     name: chat-frontend
     env: node
     plan: free
-    buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && npx serve -s dist -l $PORT
+    buildCommand: npm install && npm run build:frontend
+    startCommand: npm run start:frontend
     envVars:
       - key: VITE_API_URL
         fromService:

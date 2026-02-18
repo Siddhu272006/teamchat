@@ -1,0 +1,10 @@
+{
+    "name": "chatapplication-root",
+    "private": true,
+    "scripts": {
+        "build:backend": "cd backend && npm install",
+        "start:backend": "cd backend && node server.js",
+        "build:frontend": "cd frontend && npm install && npm run build",
+        "start:frontend": "cd frontend && npx serve -s dist -l $PORT"
+    }
+}
